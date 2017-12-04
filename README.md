@@ -24,6 +24,6 @@ Add this to your module's `build.gradle` file (make sure the version matches the
 ```gradle
 dependencies {
 	...
-	compile 'com.github.GrenderG:Toasty:1.2.5'
+	 compile 'com.github.love-311:PercentProgressBar:1.0'
 }
 ```
