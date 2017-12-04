@@ -4,6 +4,7 @@
 <div align=center>
        <img src="https://github.com/love-311/PercentProgressBar/blob/master/img/img1.png">
 </div>
+
 ## Prerequisites
 
 Add this in your root `build.gradle` file (**not** your module `build.gradle` file):
