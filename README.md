@@ -5,6 +5,3 @@
        <img src="https://github.com/love-311/PercentProgressBar/blob/master/img/img1.png">
 </div>
 
-<div align="center">
-	![](https://github.com/love-311/PercentProgressBar/blob/master/img/img1.png)
-</div>
