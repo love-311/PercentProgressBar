@@ -28,3 +28,19 @@ dependencies {
 	 compile 'com.github.love-311:PercentProgressBar:1.0'
 }
 ```
+
+## Use
+A simple in xml:
+```xml
+ <www.lee311.percentprogressbar.PercentProgressBar
+        android:id="@+id/percent_progress_bar"
+        android:layout_width="368dp"
+        android:layout_height="205dp"
+        app:bgColor="@color/red"
+        app:iconBitmap="@mipmap/transfer_icon_handle"
+        app:iconPadding="20dp"
+        app:progressColor="@color/green"
+        app:progressMax="100"
+        app:progressOrientation="horizontal"
+        app:progressValue="0"/>
+```
