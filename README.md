@@ -1,3 +1,3 @@
 # PercentProgressBar
-## 效果截图
+[![API](https://img.shields.io/badge/API-9%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=9) [![]
 ![](https://github.com/love-311/PercentProgressBar/blob/master/img/img1.png)
