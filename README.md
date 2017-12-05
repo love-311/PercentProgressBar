@@ -49,5 +49,5 @@ A simple in xml:
 
 to set the max value:
 ```java
-mPercentProgressBar.setMax(329990);
+mPercentProgressBar.setTotal(329990);
 ```
