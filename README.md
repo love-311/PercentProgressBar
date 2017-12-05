@@ -44,3 +44,10 @@ A simple in xml:
         app:progressOrientation="horizontal"
         app:progressValue="0"/>
 ```
+
+## Method
+
+to set the max value:
+```java
+mPercentProgressBar.setMax(329990);
+```
