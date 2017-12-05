@@ -47,7 +47,22 @@ A simple in xml:
 
 ## Method
 
-to set the max value:
+to set the total value:
 ```java
 mPercentProgressBar.setTotal(329990);
+```
+
+to set current progress:
+```java
+mPercentProgressBar.setProgress(30);
+```
+
+to set the listener of the progress chanange:
+```java
+mPercentProgressBar.setChangedListener(new PercentProgressBar.OnProgressChangedListener() {
+            @Override
+            public void onProgressChanged(int currentValue, int percent) {
+                
+            }
+        });
 ```
