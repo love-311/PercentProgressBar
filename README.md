@@ -57,7 +57,16 @@ to set current progress:
 mPercentProgressBar.setProgress(30);
 ```
 
-to set the listener of the progress chanange:
+to set the text size:
+```java
+mPercentProgressBar.setTextSize(64);
+```
+
+to set the text color:
+```java
+mPercentProgressBar.setTextColor(getResources().getColor(R.color.colorPrimary));
+```
+to set the listener of the progress chanage:
 ```java
 mPercentProgressBar.setChangedListener(new PercentProgressBar.OnProgressChangedListener() {
             @Override
