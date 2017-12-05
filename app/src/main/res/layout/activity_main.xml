@@ -2,11 +2,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    tools:context="www.lee311.percentprogressbar.MainActivity">
+    android:gravity="center_horizontal">
 
     <www.lee311.percentprogressbar.PercentProgressBar
         android:id="@+id/percent_progress_bar"
@@ -16,8 +14,8 @@
         app:iconBitmap="@mipmap/transfer_icon_handle"
         app:iconPadding="20dp"
         app:progressColor="@color/green"
-        app:progressMax="100"
+        app:progressMax="1000"
         app:progressOrientation="horizontal"
-        app:progressValue="0"/>
+        app:progressValue="30"/>
 
 </LinearLayout>

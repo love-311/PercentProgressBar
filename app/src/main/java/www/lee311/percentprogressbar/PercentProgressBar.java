@@ -1,6 +1,7 @@
 package www.lee311.percentprogressbar;
 
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -12,10 +13,14 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.text.DecimalFormat;
 
 /**
  * Created by Lxy on 2017/10/24.
@@ -71,6 +76,7 @@ public class PercentProgressBar extends View {
     private int baseLineY = 0;
     private OnProgressChangedListener changedListener;
     private ValueAnimator valueAnimator;
+    private DecimalFormat mDecimalFormat;
 
     public PercentProgressBar(Context context) {
         super(context);
@@ -87,7 +93,9 @@ public class PercentProgressBar extends View {
         init(context, attrs);
     }
 
+    @TargetApi(Build.VERSION_CODES.N)
     private void init(Context context, AttributeSet attrs) {
+        mDecimalFormat = new DecimalFormat("0.00");
         //关闭硬件加速，不然setXfermode()可能会不生效
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         if (attrs != null) {
@@ -97,15 +105,13 @@ public class PercentProgressBar extends View {
             progressColor = typedArray.getColor(R.styleable.PercentProgressBar_progressColor, defaultProgressColor);
             progress = typedArray.getInteger(R.styleable.PercentProgressBar_progressValue, progress);
             max = typedArray.getInteger(R.styleable.PercentProgressBar_progressMax, max);
-            if (max <= 0)
-                throw new RuntimeException("Max 必须大于 0");
             orientation = typedArray.getInteger(R.styleable.PercentProgressBar_progressOrientation, VERTICAL);
             int imgSrc = typedArray.getResourceId(R.styleable.PercentProgressBar_iconSrc, 0);
             int bitmapSrc = typedArray.getResourceId(R.styleable.PercentProgressBar_iconBitmap, 0);
             iconPadding = typedArray.getDimensionPixelSize(R.styleable.PercentProgressBar_iconPadding, 10);
             rectRadius = typedArray.getDimensionPixelSize(R.styleable.PercentProgressBar_rectRadius, 10);
-            if (max < progress) {
-                progress = max;
+            if (max <= 0) {
+                max = 0;
             }
             typedArray.recycle();
 
@@ -197,12 +203,13 @@ public class PercentProgressBar extends View {
                 if (progress > 0) {
                     canvas.drawText("支付宝", progressRect.centerX(), baseLineY - textSize - 24, writePaint);
                     canvas.drawText("余额", progressRect.centerX(), baseLineY, writePaint);
-                    canvas.drawText(progress * 1000 + "", progressRect.centerX(), baseLineY + textSize + 24, writePaint);
+                    canvas.drawText(mDecimalFormat.format(progress * max / 100.0) + "", progressRect.centerX(), baseLineY + textSize + 24, writePaint);
                 }
-                if (progress < max) {
+                Log.d("PercentProgressBar", "progress:" + progress);
+                if (progress < 100) {
                     canvas.drawText("余额宝", progressRect.width() + (bgRect.width() - progressRect.width()) / 2 + TRANSPARENT_WIDTH, baseLineY - textSize - 24, writePaint);
                     canvas.drawText("余额", progressRect.width() + (bgRect.width() - progressRect.width()) / 2 + TRANSPARENT_WIDTH, baseLineY, writePaint);
-                    canvas.drawText((max - progress) * 1000 + "", progressRect.width() + (bgRect.width() - progressRect.width()) / 2 + TRANSPARENT_WIDTH, baseLineY + textSize + 24, writePaint);
+                    canvas.drawText(mDecimalFormat.format((1 - progress / 100.0) * max) + "", progressRect.width() + (bgRect.width() - progressRect.width()) / 2 + TRANSPARENT_WIDTH, baseLineY + textSize + 24, writePaint);
                 }
             }
             //draw icon bitmap
@@ -274,7 +281,7 @@ public class PercentProgressBar extends View {
             int tmp = (int) ((progressRect.width() / bgRect.width()) * 100);
             if (percent != tmp) {
                 percent = tmp;
-                progress = percent * max / 100;
+                progress = percent;
                 if (changedListener != null)
                     changedListener.onProgressChanged(progress, percent);
             }
@@ -287,10 +294,27 @@ public class PercentProgressBar extends View {
     }
 
     //设置最大值
-    public void setMax(int m) {
-        if (max <= 0)
-            throw new RuntimeException("Max 必须大于 0");
-        max = m;
+/*
+    public void setMaxProgress(int m) {
+        if (max <= 0) {
+            max = 0;
+        } else if (max > 0 && max <= 100) {
+            max = m;
+        } else {
+            max = 100;
+        }
+        //throw new RuntimeException("Max 必须大于 0");
+    }
+*/
+
+    public void setTotal(int m) {
+        if (max <= 0) {
+            max = 0;
+        } else {
+            max = m;
+        }
+        //throw new RuntimeException("Max 必须大于 0");
+
     }
 
     //设置当前的进度
@@ -340,13 +364,13 @@ public class PercentProgressBar extends View {
     private void computeProgressRect() {
         if (orientation == VERTICAL) {
             progressRect.set(bgRect.left
-                    , bgRect.bottom - progress * bgRect.height() / max
+                    , bgRect.bottom - progress * bgRect.height() / 100
                     , bgRect.right
                     , bgRect.bottom);
         } else {
             progressRect.set(bgRect.left
                     , bgRect.top
-                    , bgRect.left + progress * bgRect.width() / max
+                    , bgRect.left + progress * bgRect.width() / 100
                     , bgRect.bottom);
         }
     }

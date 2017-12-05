@@ -14,5 +14,13 @@ public class MainActivity extends AppCompatActivity {
         mPercentProgressBar = (PercentProgressBar) findViewById(R.id.percent_progress_bar);
         mPercentProgressBar.setTextColor(getResources().getColor(R.color.colorPrimary));
         mPercentProgressBar.setTextSize(64);
+        mPercentProgressBar.setTotal(329990);
+        mPercentProgressBar.setProgress(30);
+        mPercentProgressBar.setChangedListener(new PercentProgressBar.OnProgressChangedListener() {
+            @Override
+            public void onProgressChanged(int currentValue, int percent) {
+
+            }
+        });
     }
 }
